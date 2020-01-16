@@ -1,0 +1,615 @@
+![](GoT.jpg)
+
+---
+title: "Data Visualization Group 8"
+author: "BY: Gowtham, Karen, Luis, Stacey, Tina, Vivek"
+output: html_document
+---
+
+```{r setup, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE, }
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=FALSE, message=FALSE, include=FALSE, warning=FALSE}
+install.packages("knitr", repos = "http://cran.us.r-project.org")
+
+knitr::opts_knit$set(root.dir="D:/IE/Term 2/Data Visualization/Datasets for Visualization/GoT Deaths/original/")
+```
+
+
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+if(!'ggplot2'%in%installed.packages()){
+  install.packages('ggplot2', repos = "http://cran.us.r-project.org")}
+if(!'dplyr'%in%installed.packages()){
+  install.packages('dplyr', repos = "http://cran.us.r-project.org")}
+if(!'tidyverse'%in%installed.packages()){
+  install.packages('tidyverse', repos = "http://cran.us.r-project.org")}
+if(!'igraph'%in%installed.packages()){
+  install.packages('igraph', repos = "http://cran.us.r-project.org")}
+if(!'statnet'%in%installed.packages()){
+  install.packages('statnet', repos = "http://cran.us.r-project.org")}
+if(!'visNetwork'%in%installed.packages()){
+  install.packages('visNetwork', repos = "http://cran.us.r-project.org")}
+if(!'geomnet'%in%installed.packages()){
+  install.packages('geomnet', repos = "http://cran.us.r-project.org")}
+if(!'ggridges'%in%installed.packages()){
+  install.packages('ggridges', repos = "http://cran.us.r-project.org")}
+if(!'grid'%in%installed.packages()){
+  install.packages('grid', repos = "http://cran.us.r-project.org")}
+if(!'jpeg'%in%installed.packages()){
+  install.packages('jpeg', repos = "http://cran.us.r-project.org")}
+if(!'cowplot'%in%installed.packages()){
+  install.packages('cowplot', repos = "http://cran.us.r-project.org")}
+if(!'extrafont'%in%installed.packages()){
+  install.packages('extrafont', repos = "http://cran.us.r-project.org")}
+if(!'tvthemes'%in%installed.packages()){
+  install.packages('tvthemes')}
+if(!'RColorBrewer'%in%installed.packages()){
+  install.packages('RColorBrewer')}
+if(!'gganimate'%in%installed.packages()){
+  install.packages('gganimate')}
+if(!'gifski'%in%installed.packages()){
+  install.packages('gifski')}
+if(!'png'%in%installed.packages()){
+  install.packages('png')}
+if(!'gapminder'%in%installed.packages()){
+  install.packages('gapminder')}
+if(!'scales'%in%installed.packages()){
+  install.packages('scales')}
+if(!'ggdark'%in%installed.packages()){
+  install.packages('ggdark')}
+if(!'glue'%in%installed.packages()){
+  install.packages('glue')}
+if(!'ggthemes'%in%installed.packages()){
+  install.packages('ggthemes')}
+if(!'nlme'%in%installed.packages()){
+  install.packages('nlme', repos = "http://cran.us.r-project.org")}
+if(!'gganimate'%in%installed.packages()){
+  install.packages('gganimate', repos = "http://cran.us.r-project.org")}
+if(!'ggExtra'%in%installed.packages()){
+  install.packages('ggExtra', repos = "http://cran.us.r-project.org")}
+if(!'psych'%in%installed.packages()){
+  install.packages('psych', repos = "http://cran.us.r-project.org")}
+if(!'reshape2'%in%installed.packages()){
+  install.packages('reshape2', repos = "http://cran.us.r-project.org")}
+if(!'nycfilghts13'%in%installed.packages()){
+  install.packages('nycflights13', repos = "http://cran.us.r-project.org")}
+if(!'ggcorrplot'%in%installed.packages()){
+  install.packages('ggcorrplot', repos = "http://cran.us.r-project.org")}
+if(!'waffle'%in%installed.packages()){
+  install.packages('waffle', repos = "http://cran.us.r-project.org")}
+if(!'tidyr'%in%installed.packages()){
+  install.packages('tidyr', repos = "http://cran.us.r-project.org")}
+if(!'ggalt'%in%installed.packages()){
+  install.packages('ggalt', repos = "http://cran.us.r-project.org")}
+if(!'data.table'%in%installed.packages()){
+  install.packages('data.table', repos = "http://cran.us.r-project.org")}
+if(!'lubridate'%in%installed.packages()){
+  install.packages('lubridate', repos = "http://cran.us.r-project.org")}
+if(!'DT'%in%installed.packages()){
+  install.packages('DT', repos = "http://cran.us.r-project.org")}
+if(!'grid'%in%installed.packages()){
+  install.packages('grid', repos = "http://cran.us.r-project.org")}
+if(!'gridExtra'%in%installed.packages()){
+  install.packages('gridExtra', repos = "http://cran.us.r-project.org")}
+if(!'prettydoc'%in%installed.packages()){
+  install.packages('prettydoc', repos = "http://cran.us.r-project.org")}
+if(!'devtools'%in%installed.packages()){
+  install.packages('devtools', repos = "http://cran.us.r-project.org")}
+if(!'here'%in%installed.packages()){
+  install.packages('here', repos = "http://cran.us.r-project.org")}
+if(!'forcats'%in%installed.packages()){
+  install.packages('forcats', repos = "http://cran.us.r-project.org")}
+if(!'tufte'%in%installed.packages()){
+  install.packages('tufte', repos = "http://cran.us.r-project.org")}
+if(!'colorspace'%in%installed.packages()){
+  install.packages('colorspace', repos = "http://cran.us.r-project.org")}
+if(!'viridisLite'%in%installed.packages()){
+  install.packages('viridisLite', repos = "http://cran.us.r-project.org")}
+if(!'Zelig'%in%installed.packages()){
+  install.packages('Zelig', repos = "http://cran.us.r-project.org")}
+if(!'formatR'%in%installed.packages()){
+  install.packages('formatR', repos = "http://cran.us.r-project.org")}
+if(!'DiagrammeR'%in%installed.packages()){
+  install.packages('DiagrammeR', repos = "http://cran.us.r-project.org")}
+if(!'xaringan'%in%installed.packages()){
+  install.packages('xaringan', repos = "http://cran.us.r-project.org")}
+if(!'GGally'%in%installed.packages()){
+  install.packages('GGally', repos = "http://cran.us.r-project.org")}
+if(!'extrafontdb'%in%installed.packages()){
+  install.packages('extrafontdb', repos = "http://cran.us.r-project.org")}
+if(!'magick'%in%installed.packages()){
+  install.packages('magick', repos = "http://cran.us.r-project.org")}
+if(!'shiny'%in%installed.packages()){
+  install.packages('shiny', repos = "http://cran.us.r-project.org")}
+if(!'geomnet'%in%installed.packages()){
+  install.packages('geomnet', repos = "http://cran.us.r-project.org")}
+if(!'ggcorrplot'%in%installed.packages()){
+  install.packages('ggcorrplot', repos = "http://cran.us.r-project.org")}
+if(!'ggrepel'%in%installed.packages()){
+  install.packages('ggrepel', repos = "http://cran.us.r-project.org")}
+if(!'shiny'%in%installed.packages()){
+  install.packages('shiny', repos = "http://cran.us.r-project.org")}
+if(!'devtools'%in%installed.packages()){
+  install.packages('devtools', repos = "http://cran.us.r-project.org")}
+if(!'shinyWidgets'%in%installed.packages()){
+  install.packages('shinyWidgets', repos = "http://cran.us.r-project.org")}
+
+# Loading libraries
+library(shiny)
+library(devtools)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(tvthemes)
+library(gapminder)
+library(scales)
+library(ggdark)
+library(glue)
+library(png)
+library(cowplot)
+library(extrafont)
+library(ggthemes)
+library(nlme)
+library(gganimate)
+library(gapminder)
+library(ggExtra)
+library(psych)
+library(reshape2)
+library(dplyr)
+library(nycflights13)
+library(ggcorrplot)
+library(ggrepel)
+library(waffle)
+library(tidyr)
+library(scales)
+library(ggalt)
+library(data.table)
+library(extrafont)
+library(lubridate)
+library(DT)
+library(grid)
+library(gridExtra)
+library(prettydoc)
+library(devtools)
+library(here)
+library(gifski)
+library(forcats)
+library(tufte)
+library(colorspace)
+library(viridisLite)
+library(Zelig)
+library(formatR)
+library(DiagrammeR)
+library(xaringan)
+library(ggridges)
+library(GGally)
+library(gganimate)
+library(gifski)
+library(statnet)
+library(visNetwork)
+library(igraph)
+library(geomnet)
+library(jpeg)
+library(magick)
+library(shiny)
+library(geomnet)
+loadfonts(quiet = TRUE)
+
+
+
+```
+
+
+
+```{r echo=FALSE, warning=FALSE}
+fill_color = '#111111'
+Light_red_color = '#fc9272'
+Grey_color = '#636363'
+red_color = '#de2d26'
+Legend_color = '#bdbdbd'
+
+theme_set(theme_bw())
+
+#GoT_theme
+GoT_theme<-theme_bw() + theme(
+  axis.title = element_text(size = 9, hjust = 0.3, color = Grey_color),
+  axis.text = element_text(colour = Grey_color, size = 6),
+  axis.ticks = element_blank(),
+  axis.line = element_line(colour = Light_red_color, size=0.3),
+  legend.text	= element_text(size = 10, hjust = 0.5, color = Legend_color), 
+  legend.position = c(0.1, 0.3),
+        text = element_text(family='Cinzel'),
+  legend.key = element_rect(),
+  legend.background = element_rect(),
+  legend.title = element_blank(),
+  panel.background = element_rect(),
+  panel.border = element_blank(),
+  panel.grid = element_blank(),
+  panel.grid.major = element_blank(), 
+  plot.title=element_text(size=20, face="bold"), 
+        axis.text.x=element_text(size=10),
+        axis.text.y=element_text(size=10),
+        axis.title.x=element_text(size=15),
+        axis.title.y=element_text(size=15))
+
+theme_set(GoT_theme)
+```
+
+The following Interactive Graph represents a Network of Who killed who in the Game Of Thrones Series. 
+The Thickness of the line implies magnitude of kills(in number).
+The arrow head marks the Killer to the victim.
+There is dropdown option for whichever season you wish to see the network for.
+The graph can be filtered for a single character from the Dropdown embedded in the graph.
+You can zoom in to see all the labels.
+
+```{r echo=FALSE}
+
+
+
+
+node_check <- function(x) {
+  
+  
+  
+  deaths<-read.csv("deaths.csv")
+  
+  
+  d1<-deaths[deaths$season==x,]
+  net_data<-data.frame(d1$killer,d1$name)
+  net_data<-net_data[complete.cases(net_data),]
+  net_data$count<-1
+  
+  check<- net_data %>% group_by(d1.killer,d1.name) %>% summarise(sum(count))
+  
+  
+  net <- graph_from_data_frame(check,directed = T)
+  
+  V(net)
+  E(net)$weight<-check$`sum(count)`
+  
+  
+  
+  graph <- graph.data.frame(check, directed=T)
+  graph <- simplify(graph)
+  networks <- clusters(as.directed(graph))
+  V(graph)$network <- networks$membership
+  
+  nodes <- data.frame(id = V(graph)$name, title = V(graph)$name)
+  nodes <- nodes[order(nodes$id, decreasing = F),]
+  
+  #edges <- get.data.frame(graph, what="edges")
+  edges <- data.frame(from = check$d1.killer, to = check$d1.name, value = check$`sum(count)` )
+  
+  
+  return(nodes)
+  
+  
+  
+  
+}
+
+
+
+
+edge_check <- function(x) {
+  
+  
+  
+  deaths<-read.csv("deaths.csv")
+  
+  
+  d1<-deaths[deaths$season==x,]
+  net_data<-data.frame(d1$killer,d1$name)
+  net_data<-net_data[complete.cases(net_data),]
+  net_data$count<-1
+  
+  check<- net_data %>% group_by(d1.killer,d1.name) %>% summarise(sum(count))
+  
+  
+  net <- graph_from_data_frame(check,directed = T)
+  
+  V(net)
+  E(net)$weight<-check$`sum(count)`
+  
+  
+  
+  graph <- graph.data.frame(check, directed=T)
+  graph <- simplify(graph)
+  networks <- clusters(as.directed(graph))
+  V(graph)$network <- networks$membership
+  
+  nodes <- data.frame(id = V(graph)$name, title = V(graph)$name)
+  nodes <- nodes[order(nodes$id, decreasing = F),]
+  
+  #edges <- get.data.frame(graph, what="edges")
+  edges <- data.frame(from = check$d1.killer, to = check$d1.name, value = check$`sum(count)` )
+  
+  
+  return(edges)
+  
+  
+  
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+ui <- fluidPage(
+  
+  selectInput(inputId = "season", label = "SEASON", c(1:8), selected = NULL, multiple = FALSE,
+              selectize = TRUE, width = NULL, size = NULL)
+
+  ,
+  visNetworkOutput("network")
+)
+
+
+server <- function(input, output) {
+ 
+  
+  
+  
+  
+  
+  output$network <-   renderVisNetwork({
+    
+    
+    visNetwork(node_check(input$season), edge_check(input$season), main = "The Network Of Deaths") %>%
+      visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE ,autoResize = TRUE) %>%
+      visNodes( color= c(background="black",border="orange",highlight="orange") ,shadow = TRUE , mass= 1) %>%
+      #visGroups(groupname = "1", color = "black") %>%
+      visEdges(arrows = "to", smooth = TRUE , dashes = TRUE , color = c(color="grey",highlight="maroon",hover="maroon") ) %>%
+     
+      visInteraction(hover = TRUE) 
+    
+    
+  })
+  
+
+  
+}
+shinyApp(ui = ui, server = server)
+```
+
+
+This density plot shows how the frequency of kills increase by season.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+#check the data
+GoT_Death <-read.csv("deaths.csv", sep=",")
+GoT_Actor <-read.csv("actors_screen_time.csv", sep=",")
+GoT_combo <-read.csv("combo.csv", sep=",")
+GoT_Tot_Death <-read.csv("Tot_deaths.csv", sep=",")
+
+#GRAPH 1 
+# season wise deaths
+#Introducing the scaling factor
+ggplot(GoT_Death, aes(x = episode, y = as.character(season), fill = season)) +
+  geom_density_ridges(color="black", scale = 8, size=0.1)+
+  scale_fill_distiller(palette = 'Reds', direction=1)+
+  labs(x='Episode',y='Season')+ theme(legend.position = 'right',axis.text.y = element_text(size = 10))
+
+```
+
+This graph highlights the top 10 methods of death across all 8 seasons. We can see that the method of death Dragonfire is the most popular one, used 986 times across all GOT seasons followed by Sword with 322 times and Wildfire 210 times.
+
+```{r warning=F, message=F, echo=FALSE}
+# GRAPH 4 
+# Method of Death (part1)
+# read csv file
+GoT_Tot_Death <-read.csv("Tot_deaths.csv", sep=",")
+#bar plot summary
+GoT_Tot_Death$name <- factor(GoT_Tot_Death$Total, levels = GoT_Tot_Death$Total[order(GoT_Tot_Death$Method)])
+barplot_death <-ggplot(data=GoT_Tot_Death, aes(x=reorder(Method,Total), y=Total)) +
+  geom_bar(stat="identity")+
+  scale_fill_westeros(palette = "Stark")+
+  theme(axis.title.y = element_blank())
+barplot_death + coord_flip()
+```
+
+The following Heatmap shows which Locations had maximum deaths, by which method. It can be filtered for season, allowing you to see how the method and concentration of deaths changed by location. 
+
+```{r echo=FALSE, warning=FALSE}
+ui <- fluidPage(
+  sliderInput(inputId = "season", label = "SEASON", min = 1, max = 8, value = c(1:8), step = 1)
+  , plotOutput("plot")
+)
+server <- function(input, output, session) {
+  methods<-read.csv("methods.csv")
+  grouped_m<- methods %>% group_by(method,season,location) %>% summarise(sum(count))
+  grouped_m$kills<-grouped_m$`sum(count)`
+  output$plot <-   renderPlot({
+    ggplot(grouped_m[grouped_m$season==input$season,], aes(location, method, fill= kills)) + 
+      geom_raster(aes(fill = kills), interpolate = TRUE) + scale_fill_gradient(low = "pink",high = "red")
+  })
+}
+shinyApp(ui = ui, server = server)
+```
+
+
+The following graph shows who among your favorite characters appeared more 
+frequently on screen. This also emphasizes on Ned Stark's importance, who makes this list despite being killed in Season 1.
+
+
+```{r warning=F, echo=FALSE}
+deaths <- read.csv("got_deaths.csv", header=T, sep=',')
+deaths$count <- rep(1,ncol(deaths),T)
+e3s1 <- c(factor('-'),0,3,factor('NA'),factor('NA'),factor('NA'),factor('NA'),factor('NA'),1,0)
+e8s2 <- c(factor('-'),0,8,factor('NA'),factor('NA'),factor('NA'),factor('NA'),factor('NA'),2,0)
+e7s3 <- c(factor('-'),0,7,factor('NA'),factor('NA'),factor('NA'),factor('NA'),factor('NA'),3,0)
+e6s6 <- c(factor('-'),0,6,factor('NA'),factor('NA'),factor('NA'),factor('NA'),factor('NA'),6,0)
+deaths <- rbind(deaths[1:10,],e3s1,deaths[11:108,],e8s2,deaths[109:216,],e7s3,deaths[217:653,],e6s6,deaths[654:nrow(deaths),])
+
+# Setting the ratings variable
+ratings <- read.csv("got_data.csv")
+drops <- c('Episode.Number','IMDB.Description','Notable.Death.Count','Writer')
+ratings <- ratings[,!(names(ratings) %in% drops)]
+names(ratings) <- c('season','episode','episode_name','director','year','US_viewers_in_millions','runtime_min','IMDB_votes','IMDB_rating')
+ratings$year <- as.character(ratings$year)
+ratings$year <- substr(ratings$year,nchar(ratings$year)-3,nchar(ratings$year))
+
+# Setting the screen_time variable
+screen_time <- read.csv("actors_screen_time.csv")
+names(screen_time) <- c('actor',1:7)
+rownames(screen_time) <- screen_time$actor
+screen_time$actor <- NULL
+columns <- data.frame(colnames(screen_time))
+names(columns) <- 'season'
+screen_time <- cbind(columns,as.data.frame(t(as.matrix(screen_time))))
+season_runtime <- aggregate(runtime_min~season,ratings[ratings$season<8,],sum)
+screen_time <- merge(screen_time,season_runtime,by='season')
+screen_time$count <- rep(0,ncol(screen_time),T)
+screen_time$season <- NULL
+ast <- aggregate(screen_time,FUN = sum, by=list(total=screen_time$count))
+ast$runtime_min <- NULL
+ast <- as.data.frame(t(as.matrix(ast)))
+ast$actor <- rownames(ast)
+names(ast) <- c("screen","actor")
+ast <- ast %>%top_n(13,screen)
+
+img1 <- readJPEG("Jon Snow 1.jpg")
+g1 <- rasterGrob(img1, interpolate=TRUE)
+
+img2 <- readJPEG("dany 1.jpg")
+g2 <- rasterGrob(img2, interpolate=TRUE)
+
+img3 <- readJPEG("tyrion 1.jpg")
+g3 <- rasterGrob(img3, interpolate=TRUE)
+
+img4 <- readJPEG("sansa 1.jpg")
+g4 <- rasterGrob(img4, interpolate=TRUE)
+
+img5 <- readJPEG("cersei 1.jpg")
+g5 <- rasterGrob(img5, interpolate=TRUE)
+
+img6 <- readJPEG("arya 1.jpg")
+g6 <- rasterGrob(img6, interpolate=TRUE)
+
+img7 <- readJPEG("jaime 1.jpg")
+g7 <- rasterGrob(img7, interpolate=TRUE)
+
+img8 <- readJPEG("sam 1.jpg")
+g8 <- rasterGrob(img8, interpolate=TRUE)
+
+img9 <- readJPEG("jorah 1.jpg")
+g9 <- rasterGrob(img9, interpolate=TRUE)
+
+img10 <- readJPEG("theon 1.jpg")
+g10 <- rasterGrob(img10, interpolate=TRUE)
+
+img11 <- readJPEG("baelish 1.jpg")
+g11 <- rasterGrob(img11, interpolate=TRUE)
+
+img12 <- readJPEG("davos 1.jpg")
+g12 <- rasterGrob(img12, interpolate=TRUE)
+
+img13 <- readJPEG("ned 1.jpg")
+g13 <- rasterGrob(img13, interpolate=TRUE)
+
+ggplot(ast)+
+  geom_bar(aes(x=reorder(actor,screen),y=screen),stat = "identity")+
+  coord_flip()+
+  annotation_custom(grob=g1, xmin=0, xmax=26.2, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g2, xmin=0, xmax=22.15, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g3, xmin=0, xmax=24.15, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g4, xmin=0, xmax=20.1, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g5, xmin=0, xmax=18.1, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g6, xmin=0, xmax=16.1, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g7, xmin=0, xmax=14.1, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g8, xmin=0, xmax=12.1, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g9, xmin=0, xmax=10.1, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g10, xmin=0, xmax=8.1, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g11, xmin=0, xmax=6.1, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g12, xmin=0, xmax=4.1, ymin=-Inf, ymax=-1)+
+  annotation_custom(grob=g13, xmin=0, xmax=2.1, ymin=-Inf, ymax=-1)+ 
+  theme(plot.title=element_text(size=25, face="bold"),
+        text = element_text(family='Cinzel'),
+        axis.title.y=element_blank())+
+  scale_fill_westeros(palette = "Stark")+
+  labs(title="Who is your favorite?", y="Screen time",caption = "Updated till Season 7")
+
+```
+
+
+The top 10 characters based on screen time distribution based on kill count and gender. 
+We can clearly see that the evolution of female kills has drastically increased from season 1 to season 8 and that the gender distribution were pretty equal up until season 5.
+
+```{r warning=F, message=F, echo=FALSE}
+fill_color = '#040000'
+decoration_color = '#040000'
+main1_color = '#f20675'
+main2_color = '#bdbdbd'
+
+#Subsetting the top 10 screentime actors in deaths
+deaths <- read.csv("deaths.csv")
+deaths.new <- subset(deaths, killer %in% c("Jon Snow","Tyrion Lannister","Daenerys Targaryen","Sansa Stark","Cersei Lannister","Arya Stark","Jamie Lannister","Sam Tarley","Jorah Mormont","Theon Greyjoy"))
+
+#Making a new column with gender creating a function that takes each name and calculates gender
+deaths.new$Gender <- ifelse(deaths.new$killer=="Daenerys Targaryen", "F",
+               ifelse(deaths.new$killer=="Tyrion Lannister", "M",
+                      ifelse(deaths.new$killer=="Cersei Lannister", "F",
+                             ifelse(deaths.new$killer=="Jon Snow", "M",
+                                    ifelse(deaths.new$killer=="Sansa Stark", "F",
+                                           ifelse(deaths.new$killer=="Arya Stark", "F",
+                                                  ifelse(deaths.new$killer=="Jamie Lannister", "M",
+                                                         ifelse(deaths.new$killer=="Sam Tarley", "M",
+                                                                ifelse(deaths.new$killer=="Jorah Mormont", "M",
+                                                                       ifelse(deaths.new$killer=="Theon Greyjoy", "M",
+                                                                              NA))))))))))
+
+##MAKING GRAPHS##
+
+#sum(deaths.new$Gender=='M')
+#sum(deaths.new$Gender=='F')
+
+#COUNT GENDER KILLS PR. SEASON and adding them to a new dataframe
+
+KG <- aggregate(count~season+Gender,deaths.new,sum)
+
+#as.data.frame(KG)
+
+#Plotting the difference by season 
+KG_plot <- ggplot(na.omit(KG), aes(x = season, y = count, colour = Gender)) +
+  geom_point() + geom_line(size = 1.25) +
+  transition_reveal(season)+
+  scale_fill_westeros(palette = "Stark")+
+  theme(legend.title = element_blank(),axis.title.y = element_blank(), legend.position = c(0.81,0.9))+
+  scale_color_manual(labels = c("Female", "Male"), values = c('black','grey'))+
+  ggtitle("KILL COUNT BY GENDER AND SEASON")
+
+KG_gif <- animate(KG_plot, width = 500, height = 500, fps = 20)
+KG_gif
+```
+
+#### IMBD Rating and US Viewers by Season
+This graph shows the relationship between IMBD Rating and US Viewers among the seasons. Interestingly, there are a death cross at season 7 with high viewers but low rating and a dramatical decline of rating at season 8.
+
+
+```{r echo=FALSE, warning=FALSE}
+combo<-read.csv("combination.csv")
+Season<-combo$season_E
+Viewers<-combo$US_viewers_in_millions
+Rating<-combo$IMDB_rating
+final<-data.frame(Season,Viewers,Rating)
+
+a<- ggplot(final) +
+  geom_line(aes(x=Season, y=Viewers, color = "red"), size = 1.25) +
+  geom_point(aes(x=Season, y=Viewers, color = "red")) +
+  transition_reveal(Season)+ylim(0,15)+
+  geom_line(aes(x=Season, y=Rating, color = "blue"), size = 1.25) +
+  geom_point(aes(x=Season, y=Rating, color = "blue"))+
+  labs(x="Season")+
+  theme(legend.title = element_blank(),axis.title.y = element_blank(), legend.position = c(0.81,0.9))+
+  scale_color_manual(labels = c("IMBD Rating", "US Viewer in million"),values = c("blue", "red"))+
+  scale_fill_westeros(palette = "Stark")
+a
+```
